@@ -14,4 +14,5 @@ export const chainIds = {
 	// Development chains
 	ganache: 1337,
 	hardhat: 31337,
+	hpb: 269,
 }

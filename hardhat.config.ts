@@ -53,6 +53,10 @@ const config: HardhatUserConfig = {
 			url: 'https://r8wontufnqbi.usemoralis.com:2053/server',
 			accounts: getDeploymentAccount(),
 		},
+		hpb: {
+			url: 'https://hpbnode.com',
+			accounts: getDeploymentAccount(),
+		},
 	},
 	gasReporter: {
 		enabled: true,

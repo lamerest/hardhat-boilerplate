@@ -14,8 +14,8 @@ async function main() {
 	await hre.run('compile')
 
 	// We get the contract to deploy
-	const Contract = await ethers.getContractFactory('Greeter')
-	const contract = await Contract.deploy('Hi!')
+	const Contract = await ethers.getContractFactory('UnistoryMarketplace')
+	const contract = await Contract.deploy()
 
 	await contract.deployed()
 

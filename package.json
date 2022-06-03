@@ -44,6 +44,28 @@
     "solc": "^0.8.13"
   },
   "scripts": {
-    "prepare": "husky install"
+    "clean": "hardhat clean",
+    "commit": "git-cz",
+    "compile": "hardhat compile",
+    "coverage": "hardhat coverage --solcoverjs ./.solcover.js --temp artifacts --testfiles \"./test/**/*.ts\"",
+    "predeploy": "npm run compile && npm run typechain",
+    "deploy": "hardhat run scripts/deploy.ts",
+    "predeploy:network": "npm run predeploy",
+    "deploy:network": "hardhat run scripts/deploy.ts --network",
+    "flatten": "hardhat flatten contracts/$npm_config_name.sol > flattened/$npm_config_name.sol",
+    "graph:codegen": "graph codegen --output-dir graph/codegen",
+    "graph:build": "graph build --output-dir graph/build",
+    "graph:test": "graph/test.sh",
+    "graph:build-test": "npm run graph:build && npm run graph:test",
+    "graph:deploy": "graph deploy --product hosted-service little-phil/xillion-bsc-two",
+    "lint": "npm run lint:sol && npm run lint:ts",
+    "lint:sol": "solhint --config ./.solhint.json --max-warnings 0 \"contracts/**/*.sol\"",
+    "lint:ts": "eslint --config ./.eslintrc.yaml --ignore-path ./.eslintignore --ext .js,.ts .",
+    "lint-staged": "lint-staged",
+    "postinstall": "husky install",
+    "ganache:start": "ganache-cli -h 0.0.0.0",
+    "test": "hardhat test",
+    "typechain": "hardhat typechain",
+    "watch": "hardhat compile && npx hardhat watch compilation"
   }
 }

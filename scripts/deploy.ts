@@ -3,8 +3,10 @@
 //
 // When running the script with `npx hardhat run <script>` you'll find the Hardhat
 // Runtime Environment's members available in the global scope.
+import { Interface } from '@ethersproject/abi'
 import { Contract } from 'ethers'
 import hre, { ethers } from 'hardhat'
+import * as IMPLEMAENTATION_CONTRACT from '../artifacts/contracts/Implementation.sol/Implementation.json'
 
 async function main() {
 	// Hardhat always runs the compile task when running scripts with its command
@@ -29,11 +31,17 @@ async function main() {
 
 	await proxy.setImplementation(implementation.address)
 
-	const implementationInterface = Implementation.interface
+	// const implementationInterface = Implementation.interface
 
-	const proxyWithImplementationInterface = new Contract(proxy.address, implementationInterface, ethers.provider)
-	const tx = await proxyWithImplementationInterface.add(1, 2)
-	console.log(tx)
+	// Creating interface from ABI
+	const implementationInterface = new Interface(IMPLEMAENTATION_CONTRACT.abi)
+
+	// Defining Proxy contract as contract with logic
+	const contract = new Contract(proxy.address, implementationInterface, ethers.provider)
+
+	// Call any function on contract
+	const tx = await contract.add(1, 2) // 1 + 2
+	console.log(tx) // 3
 }
 
 // We recommend this pattern to be able to use async/await everywhere

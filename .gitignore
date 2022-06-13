@@ -13,3 +13,6 @@ artifacts
 
 # Secret or personal info
 .env
+
+# vscode configs
+.vscode

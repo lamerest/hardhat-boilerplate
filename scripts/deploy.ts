@@ -1,30 +1,24 @@
-// We require the Hardhat Runtime Environment explicitly here. This is optional
-// but useful for running the script in a standalone fashion through `node <script>`.
-//
-// When running the script with `npx hardhat run <script>` you'll find the Hardhat
-// Runtime Environment's members available in the global scope.
-import hre, { ethers } from 'hardhat'
+import { ethers } from "hardhat";
 
 async function main() {
-	// Hardhat always runs the compile task when running scripts with its command
-	// line interface.
-	//
-	// If this script is run directly using `node` you may want to call compile
-	// manually to make sure everything is compiled
-	await hre.run('compile')
+  const currentTimestampInSeconds = Math.round(Date.now() / 1000);
+  const unlockTime = currentTimestampInSeconds + 60;
 
-	// We get the contract to deploy
-	const Contract = await ethers.getContractFactory('UnistoryMarketplace')
-	const contract = await Contract.deploy()
+  const lockedAmount = ethers.utils.parseEther("0.001");
 
-	await contract.deployed()
+  const Lock = await ethers.getContractFactory("Lock");
+  const lock = await Lock.deploy(unlockTime, { value: lockedAmount });
 
-	console.log('Contract deployed to:', contract.address)
+  await lock.deployed();
+
+  console.log(
+    `Lock with ${ethers.utils.formatEther(lockedAmount)}ETH and unlock timestamp ${unlockTime} deployed to ${lock.address}`
+  );
 }
 
 // We recommend this pattern to be able to use async/await everywhere
 // and properly handle errors.
 main().catch((error) => {
-	console.error(error)
-	process.exitCode = 1
-})
+  console.error(error);
+  process.exitCode = 1;
+});

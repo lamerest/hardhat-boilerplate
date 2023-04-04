@@ -16,3 +16,6 @@ artifacts
 
 # vscode configs
 .vscode
+
+# Typechain
+typechain-types
